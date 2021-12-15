@@ -9,15 +9,15 @@ var square = {
 };
 var pieces = [];
 var drawBoard = function () {
-    for (var i = 0; i < 8; ++i) {
-        for (var j = 0; j < 8; ++j) {
-            if ((i + j) % 2 == 0) {
-                drawRect(j * square.h, i * square.w, "#EEEEEE");
-                addPiece(j * square.h, i * square.w, "#EEEEEE");
+    for (var y = 0; y < 8; ++y) {
+        for (var x = 0; x < 8; ++x) {
+            if ((y + x) % 2 == 0) {
+                drawRect(x * square.h, y * square.w, "#EEEEEE");
+                addPiece(x * square.h, y * square.w, "#EEEEEE");
             }
             else {
-                drawRect(j * square.h, i * square.w, "black");
-                addPiece(j * square.h, i * square.w, "black");
+                drawRect(x * square.h, y * square.w, "black");
+                addPiece(x * square.h, y * square.w, "black");
             }
         }
     }
@@ -30,11 +30,11 @@ var drawRect = function (x, y, color) {
 };
 var addPiece = function (x, y, color) {
     var piece = {
-        role: "",
+        role: "ERROR",
         x: x,
         y: y,
         color: color,
-        value: 0,
+        value: -1,
     };
     if (y === square.h || y === square.h * 6) {
         piece.role = "pawn";
