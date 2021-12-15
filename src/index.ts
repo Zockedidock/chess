@@ -24,14 +24,14 @@ let square: Square = {
 var pieces: Piece[] = []
 
 const drawBoard = () => {
-    for (let i = 0; i < 8; ++i) {
-        for (let j = 0; j < 8; ++j) {
-            if ((i + j) % 2 == 0) {
-                drawRect(j * square.h, i * square.w, "#EEEEEE")
-                addPiece(j * square.h, i * square.w, "#EEEEEE")
+    for (let y = 0; y < 8; ++y) {
+        for (let x = 0; x < 8; ++x) {
+            if ((y + x) % 2 == 0) {
+                drawRect(x * square.h, y * square.w, "#EEEEEE")
+                addPiece(x * square.h, y * square.w, "#EEEEEE")
             } else {
-                drawRect(j * square.h, i * square.w, "black")
-                addPiece(j * square.h, i * square.w, "black")
+                drawRect(x * square.h, y * square.w, "black")
+                addPiece(x * square.h, y * square.w, "black")
             }
         }
     }
@@ -44,11 +44,11 @@ const drawRect = (x: number, y: number, color: string = "white") => {
 
 const addPiece = (x: number, y: number, color: string) => {
     let piece: Piece = {
-        role: "",
+        role: "ERROR",
         x: x,
         y: y,
         color: color,
-        value: 0,
+        value: -1,
     }
     if (y === square.h || y === square.h * 6) {
         piece.role = "pawn"
