@@ -1,4 +1,10 @@
 <script setup lang="ts">
+WebAssembly.instantiateStreaming(fetch("test.wasm")).then((obj) => {
+	const square = obj.instance.exports.square as CallableFunction
+	let result = square(2)
+	console.log(result)
+})
+
 let greeting: string = "Hello World!"
 </script>
 
