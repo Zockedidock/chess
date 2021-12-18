@@ -1,15 +1,34 @@
 <script setup lang="ts">
-WebAssembly.instantiateStreaming(fetch("test.wasm")).then((obj) => {
+/*WebAssembly.instantiateStreaming(fetch("test.wasm")).then((obj) => {
 	const square = obj.instance.exports.square as CallableFunction
 	let result = square(2)
 	console.log(result)
+})*/
+import { ref, onMounted } from "vue"
+/*
+onMounted(async () => {
+	const fetchPromise = fetch("test.wasm")
+	const { instance } = await WebAssembly.instantiateStreaming(fetchPromise)
+
+	const square = instance.exports.square as CallableFunction
+	test.value = square(40)
 })
+*/
+type int = number
+const test = ref(0)
+const square = async (int: int) => {
+	const fetchPromise = fetch("test.wasm")
+	const { instance } = await WebAssembly.instantiateStreaming(fetchPromise)
+
+	const square = instance.exports.square as CallableFunction
+	return await square(int)
+}
 
 let greeting: string = "Hello World!"
 </script>
 
 <template>
-	{{ greeting }}
+	{{ test }}
 	<div class="board">
 		<div v-for="y in 8">
 			<div v-for="x in 8">
@@ -32,6 +51,24 @@ let greeting: string = "Hello World!"
 			</div>
 		</div>
 	</div>
+	<button
+		@click="
+			square(20).then((result) => {
+				test = result
+			})
+		"
+	>
+		20
+	</button>
+	<button
+		@click="
+			square(4000).then((result) => {
+				test = result
+			})
+		"
+	>
+		4000
+	</button>
 </template>
 
 <style scoped lang="scss">
